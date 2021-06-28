@@ -118,7 +118,11 @@ ngx_reset_pool(ngx_pool_t *pool)
     pool->large = NULL;
 }
 
-
+/*
+ * while the memory required is less than pagesize(usualy 4k), 
+ * use the memory pool ngx_palloc_small, 
+ * on the other hand get memory from memory pool ngx_palloc_large
+ */
 void *
 ngx_palloc(ngx_pool_t *pool, size_t size)
 {
