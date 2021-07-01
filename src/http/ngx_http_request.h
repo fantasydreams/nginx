@@ -454,41 +454,30 @@ struct ngx_http_request_s {
     unsigned                          subrequests:8;
     unsigned                          blocked:8;
 
+
     unsigned                          aio:1;
-
     unsigned                          http_state:4;
-
-    /* URI with "/." and on Win32 with "//" */
-    unsigned                          complex_uri:1;
-
-    /* URI with "%" */
-    unsigned                          quoted_uri:1;
-
-    /* URI with "+" */
-    unsigned                          plus_in_uri:1;
-
-    /* URI with " " */
-    unsigned                          space_in_uri:1;
-
-    /* URI with empty path */
-    unsigned                          empty_path_in_uri:1;
-
+    unsigned                          complex_uri:1; /* URI with "/." and on Win32 with "//" */
+    unsigned                          quoted_uri:1;  /* URI with "%" */
+    unsigned                          plus_in_uri:1; /* URI with "+" */
+    
+    unsigned                          space_in_uri:1;/* URI with " " */
+    unsigned                          empty_path_in_uri:1; /* URI with empty path */
     unsigned                          invalid_header:1;
-
     unsigned                          add_uri_to_alias:1;
     unsigned                          valid_location:1;
     unsigned                          valid_unparsed_uri:1;
     unsigned                          uri_changed:1;
-    unsigned                          uri_changes:4;
 
+    unsigned                          uri_changes:4;
     unsigned                          request_body_in_single_buf:1;
     unsigned                          request_body_in_file_only:1;
     unsigned                          request_body_in_persistent_file:1;
     unsigned                          request_body_in_clean_file:1;
+    
     unsigned                          request_body_file_group_access:1;
     unsigned                          request_body_file_log_level:3;
     unsigned                          request_body_no_buffering:1;
-
     unsigned                          subrequest_in_memory:1;
     unsigned                          waited:1;
 

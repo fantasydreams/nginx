@@ -51,6 +51,7 @@ Nginx是一款多进程的软件。Nginx启动后，会产生一个master进程�
 - 向各worker进程发送信号。
 - 监控woker进程的运行状态。
 - 当woker进程退出后（异常情况下），会自动重新启动新的woker进程。
+- nginx支持通过配置只运行master而不启动worker,便于调试用
 
 ### worker进程
 
@@ -67,6 +68,8 @@ nginx在启动后，在unix系统中会以daemon的方式在后台运行，后�
 
 
 ### 进程控制
+- master会一直监控worker的运行情况，一旦某个worker状态异常，master负责重启所有worker
+- 控制nginx通过向master发送信号，master通过接收到的信号对整个nginx进行控制
 
 #### 手动发送信号
 
