@@ -2,7 +2,7 @@
 # Copyright (C) Igor Sysoev
 # Copyright (C) Nginx, Inc.
 
-
+# END作为标识符，将目前位置到END间的块作为标准输出重定向到cat进行输出，然后 >> 重定向到 $NGX_AUTO_CONFIG_H 文件
 cat << END >> $NGX_AUTO_CONFIG_H
 
 #ifndef $have

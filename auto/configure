@@ -6,10 +6,11 @@
 
 LC_ALL=C
 export LC_ALL
-
-. auto/options
-. auto/init
-. auto/sources
+#  LC_ALL并不是一个环境变量，而是一个glibc中定义的一个宏，LC_ALL=C这样的语法实际上是调用了setlocale把所有的LC_*的变量设置了一遍，
+#  所以在终端中直接echo $LC_TIME等可以输出对应变量的值，但是echo $LC_ALL，不好意思，啥都没有，因为它压根就不是一个变量。
+. auto/options  #设置变量，并将之置空
+. auto/init     #初始化一些变量诸如：NGX_AUTO_HEADERS_H=$NGX_OBJS/ngx_auto_headers.h
+. auto/sources  #设置核心模块、平台代码对应的源文件
 
 test -d $NGX_OBJS || mkdir -p $NGX_OBJS
 
@@ -23,7 +24,7 @@ if [ $NGX_DEBUG = YES ]; then
     have=NGX_DEBUG . auto/have
 fi
 
-
+# -z string     True if the length of string is zero.
 if test -z "$NGX_PLATFORM"; then
     echo "checking for OS"
 

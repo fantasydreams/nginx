@@ -22,7 +22,11 @@ struct ngx_buf_s {
     u_char          *last;
     off_t            file_pos;
     off_t            file_last;
-
+    
+    /*
+    * 当buf所指向的数据在内存里的时候，这一整块内存包含的内容可能被包含在多个buf中(比如在某段数据中间插入了其他的数据，这一块数据就需要被拆分开)。
+    * 那么这些buf中的start和end都指向这一块内存的开始地址和结束地址。而pos和last指向本buf所实际包含的数据的开始和结尾。
+    */
     u_char          *start;         /* start of buffer */
     u_char          *end;           /* end of buffer */
     ngx_buf_tag_t    tag;
@@ -46,8 +50,9 @@ struct ngx_buf_s {
     unsigned         in_file:1;
     unsigned         flush:1;
     unsigned         sync:1;
-    unsigned         last_buf:1;
-    unsigned         last_in_chain:1;
+    unsigned         last_buf:1;        //数据被以多个chain传递给了过滤器，此字段为1表明这是最后一个buf。
+    unsigned         last_in_chain:1;   //在当前的chain里面，此buf是最后一个。特别要注意的是last_in_chain的buf不一定是last_buf，
+                                        //但是last_buf的buf一定是last_in_chain的。这是因为数据会被以多个chain传递给某个filter模块。
 
     unsigned         last_shadow:1;
     unsigned         temp_file:1;

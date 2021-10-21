@@ -42,10 +42,11 @@ ngx_list_push(ngx_list_t *l)
         last = ngx_palloc(l->pool, sizeof(ngx_list_part_t));
         if (last == NULL) {
             return NULL;
-        }
+        }//这里可能存在内存泄漏，这里申请成功，下面的申请失败，再进来会重新申请一次
 
         last->elts = ngx_palloc(l->pool, l->nalloc * l->size);
         if (last->elts == NULL) {
+            ngx_pfree(l->pool, last); //不加这一行就内存泄露了
             return NULL;
         }
 
